@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Category Detail</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a class="btn btn-primary icon-btn"
+						href="javascript:window.history.back();"><i
+						class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Name :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${category.name}"></label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Description :</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${category.description}"></label></b>
+									</div>
+								</div>
+							</div>
+							<hr></hr>
+							<div class="row"></div>
+						</div>
+					</form>
+					<hr></hr>
+					<!-- items -->
+					<div class="card">
+						<div class="card-body">
+							<div class="panel panel-heading">
+								<h3 class="panel-title">Musics</h3>
+							</div>
+							<table class="table table-hover" id="categoryDetailTable">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Threshold</th>
+										<th>Edit</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item : ${category.musics}">
+										<th scope="row" th:text="${item.id}"></th>
+										<td th:text="${item.name}"></td>
+										<td th:text="${item.description}"></td>
+										<td th:text="${item.threshold}"></td>
+										<td style="width: 50px;"><p title="Edit">
+												<a th:href="@{/eitem/{id}(id=${item.id})}"><button
+														class="btn btn-primary btn-s">
+														<span class="fa fa-pencil"></span>
+													</button></a>
+											</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<!-- modal -->
+					<!-- delete modal -->
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+						aria-labelledby="edit" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<input type="hidden" name="modalRoleId" id="modalRoleId"
+										value="" />
+								</div>
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Remove
+										item</h4>
+								</div>
+								<div class="modal-body">
+
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign"></span>
+										<p>Remove item from category</p>
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-primary deleteItem">
+										<span class="fa fa-check"></span> 
+										<p th:text="#{yesText}"></p>
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="fa fa-times"></span> 
+										<p th:text="#{noText}"></p>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="../js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="../js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteItemFromList").click(function() {
+		$("#modalItemId").val($(this).attr("data-id"))
+	});
+	$(".deleteItem").click(function() {
+		event.preventDefault();
+		deleteRole();
+	});
+	$('#categoryDetailTable').DataTable();
+</script>
+</html>

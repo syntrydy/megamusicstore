@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en" th:fragment="app_firstheader">
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<!-- CSS-->
+<link rel="stylesheet" type="text/css" href="../css/main.css"
+	th:href="@{../css/main.css}"></link>
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+<title>MegaMusik</title>
+<link rel="stylesheet" type="text/css" href="../css/app.css"
+	th:href="@{../css/app.css}"></link>
+<link rel='icon' href='../images/favicon.png' type='image/x-icon'
+	th:href="@{../images/favicon.png}"></link>
+</head>
+<body class="sidebar-mini fixed">
+
+	<div class="wrapper">
+		<!-- Navbar-->
+		<header class="main-header hidden-print"
+			th:fragment="app_secondheader">
+			<a class="logo" href="/home">MegaMusik</a>
+			<nav class="navbar navbar-static-top">
+				<!-- Sidebar toggle button-->
+				<a class="sidebar-toggle" href="#" data-toggle="offcanvas"></a>
+				<!-- Navbar Right Menu-->
+				<div class="navbar-custom-menu">
+					<ul class="top-nav">
+						<!--Notification Menu-->
+						<li class="dropdown notification-menu"><a
+							class="dropdown-toggle" href="#" data-toggle="dropdown"
+							aria-expanded="false"><i class="fa fa-bell-o fa-lg"></i></a>
+							<ul class="dropdown-menu">
+								<li class="not-head">Actives notifications</li>
+
+								<li><a class="media" href="javascript:;"><span
+										class="media-left media-icon"><span
+											class="fa-stack fa-lg"><i
+												class="fa fa-circle fa-stack-2x text-success"></i><i
+												class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
+										<div class="media-body">
+											<span class="block">This week"s trending music</span><span
+												class="text-muted block">2min ago</span>
+										</div></a></li>
+								<li class="not-footer"><a href="#">Show all</a></li>
+							</ul></li>
+						<!-- User Menu-->
+						<li class="dropdown"><a class="dropdown-toggle" href="#"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
+							<ul class="dropdown-menu settings-menu">
+								<li><a href="/config"><i class="fa fa-cog fa-lg"
+										th:text="#{settingsMenuText}"></i></a></li>
+								<li><a href="/profile">&nbsp;<i
+										class="fa fa-user fa-lg" th:text="${username}"></i></a></li>
+								<li><a href="/"><i class="fa fa-sign-out"
+										th:text="#{signOutMenuText}"></i></a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- Side-Nav-->
+		<aside class="main-sidebar hidden-print" th:fragment="app_aside">
+			<section class="sidebar">
+				<div class="user-panel">
+					<div class="pull-left image">
+						<img class="img-circle" src="../images/favicon-96x96.png"
+							alt="User Image"></img>
+					</div>
+					<div class="pull-left info">
+						<p th:text="${username}"></p>
+						<p class="designation">Welcome</p>
+					</div>
+				</div>
+				<!-- Sidebar Menu-->
+				<ul class="sidebar-menu" id="navbarId">
+					<li sec:authorize="hasRole('ADMIN')" class="active"><a
+						href="/home"><i class="fa fa-dashboard"></i><span
+							th:text="#{homeMenuText}">Dashboard</span></a></li>
+
+					<li  id="adminMenuId" sec:authorize="hasRole('ADMIN')" class="treeview"><a
+						href="#"><i class="fa fa-bank"></i><span>Administration</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li class="treeview"><a href="#"><i class="fa fa-users"></i><span>Users</span><i
+									class="fa fa-angle-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a href="/user"><i class="fa fa-plus"></i>Add user</a></li>
+									<li><a href="/users"><i class="fa fa-list"></i><span>
+												view</span></a></li>
+								</ul></li>
+							<li class="treeview"><a href="#"><i
+									class="fa fa-user-circle"></i><span>Roles</span><i
+									class="fa fa-angle-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a href="/role"><i class="fa fa-plus"></i>add role</a></li>
+									<li><a href="/roles"><i class="fa fa-list"></i><span>
+												All roles</span></a></li>
+								</ul></li>
+						</ul></li>
+
+					<li id="categoriesMenuId" sec:authorize="hasRole('ADMIN')" class="treeview"><a
+						href="#"><i class="fa fa-cubes"></i><span>Categories</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="/category"><i class="fa fa-plus"></i>Add
+									category</a></li>
+							<li><a href="/categories"><i class="fa fa-list"></i>Show
+									all</a></li>
+						</ul></li>
+
+					<li id="musicMenuId" sec:authorize="hasRole('ADMIN')"
+						class="treeview"><a href="#"><i class="fa fa-music"></i><span>Musics</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul  class="treeview-menu">
+							<li id="musicList"><a id="musicListId" href="/musics"><i class="fa fa-list"></i>All</a></li>
+						</ul></li>
+
+					<li class="treeview"><a href="/"><i class="fa fa-sign-out"></i><span
+							th:text="#{signOutMenuText}">Logout</span></a></li>
+				</ul>
+			</section>
+		</aside>
+
+
+		<br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+		<div sec:authorize="hasRole('ADMIN')">This will only be
+			displayed if authenticated user has role ADMIN.</div>
+	</div>
+
+	<footer class="page-footer myfooter back" th:fragment="app_footer">
+		<script src="../js/jquery-2.1.4.min.js"
+			th:src="@{../js/jquery-2.1.4.min.js}"></script>
+		<script src="../js/bootstrap.min.js"
+			th:src="@{../js/bootstrap.min.js}"></script>
+		<script src="../js/plugins/pace.min.js"
+			th:src="@{../js/plugins/pace.min.js}"></script>
+		<script src="../js/main.js" th:src="@{../js/main.js}"></script>
+		<script src="../js/app.js" th:src="@{../js/app.js}"></script>
+		<script src="../js/plugins/jquery.dataTables.min.js"></script>
+		<script src="../js/plugins/dataTables.bootstrap.min.js"></script>
+	</footer>
+</body>
+</html>

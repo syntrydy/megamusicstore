@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+			<div class="page-title"
+				th:text="#{homeMenuText}+' > '+#{usersMenuText}+' > '+#{userAddMenuText}"></div>
+			<div>
+
+				<div class="col-md-8">
+					<div class="card">
+						<h3 class="card-title" th:text="#{UserAddTitleText}"></h3>
+						<hr></hr>
+						<div class="card-body">
+							<form name="f" th:object="${user}" method="post"
+								th:action="@{/user}">
+								<div class="form-group">
+									<label class="control-label">Full Name</label> <input
+										class="form-control" type="text" placeholder="Enter full name"
+										th:field="*{fullName}"></input>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Email</label> <input
+										class="form-control" type="email"
+										placeholder="Enter email address" th:field="*{email}"></input>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Phone</label> <input
+										class="form-control" type="text" placeholder="phone number"
+										th:field="*{phone}"></input>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Password</label> <input
+										class="form-control" type="password" placeholder="password"
+										th:field="*{password}"></input>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Check password</label> <input
+										class="form-control" type="password" placeholder="re-password"
+										th:field="*{passwordConfirm}"></input>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Roles</label> <select
+										multiple="multiple" th:field="*{roles}"
+										class="browser-default">
+										<option th:each="role : ${roles}" th:value="${role.id}"
+											th:text="${role.name}" />
+									</select>
+								</div>
+								<div class="card-footer">
+									<div class="row">
+										<div class="col-md-8 col-md-offset-3">
+											<button class="btn btn-primary icon-btn" type="submit"
+												th:text="#{ButtonRegisterText}">
+												<i class="fa fa-fw fa-lg fa-check-circle"></i>
+											</button>
+											&nbsp;&nbsp;&nbsp;<a th:text="#{ButtonCancelText}"
+												class="btn btn-default icon-btn"
+												href="javascript:window.history.back();"><i
+												class="fa fa-fw fa-lg fa-times-circle"></i></a>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Music details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Song detail</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a class="btn btn-primary icon-btn"
+						href="javascript:window.history.back();"><i
+						class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Name :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${music.name}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Artist
+										:</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${music.artistName}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Category :</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${music.category.name}"></label></b>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> <span
+										class="fa fa-thumbs-up"></span></label>
+									<div class="col-md-1 col-sm-1">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${music.likes}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-4"> <span
+										class="fa fa-thumbs-down"></span></label>
+									<div class="col-md-1 col-sm-1">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${music.dislikes}"></label></b>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-4"> <span
+										class="fa fa-file"></span></label>
+									<div class="col-md-8 col-sm-8">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${music.fileName}"></label></b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<hr></hr>
+					<!-- media upload -->
+					<div th:if="${!music.isHasMedia()}" class="card">
+						<form method="POST" enctype="multipart/form-data"
+							action="/musicfile">
+							<table>
+								<tr>
+									<td>UPLOAD A SONG FILE OR AN IMAGE :&nbsp;</td>
+									<td><input type="file" name="file" /></td>
+									<td><input type="hidden" name="id" th:field="*{music.id}" /></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="submit" value="Upload" /></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<!-- song preview -->
+					<div th:if="${music.mediaIsAudio()}" class="card">
+						<h1>Audio</h1>
+						<video controls="controls">
+							<source th:src="${file}" type="video/mp4"></source>
+						</video>
+					</div>
+					<div th:if="${music.mediaIsVideo()}" class="card">
+						<h1>Video</h1>
+						<video controls="controls" style="width:50%; height:400px;">
+							<source th:src="${file}" type="video/mp4"></source>
+						</video>
+					</div>
+					<div th:if="${music.mediaIsImage()}" class="card">
+						<h1>Featured Image</h1>
+							<img th:src="${file}"></img>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript"
+	src="../js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="../js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</html>

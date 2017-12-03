@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="utf-8"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="stylesheet" type="text/css" href="css/main.css"></link>
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+<title>IMS</title>
+</head>
+<body>
+	<div class="page-error">
+		<h1>
+			<i class="fa fa-exclamation-circle"></i> OUPS OUPS OUPS
+		</h1>
+		<p>Some error appear when processing your request.</p>
+
+		<p th:text="${errorMessage}">No error details available</p>
+		<p>
+			<a href="javascript:window.history.back();">Go back to previous
+				page</a>
+		</p>
+	</div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/pace.min.js"></script>
+<script src="js/main.js"></script>
+</html>

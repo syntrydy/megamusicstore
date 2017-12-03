@@ -1,0 +1,84 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="AAM-04" author="gasmyr.mougang">
+		<createTable tableName="_category">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="category_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="_category">
+			<column name="name" value="Comedy" />
+			<column name="description" value="Comedy" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="_category">
+			<column name="name" value="Classical" />
+			<column name="description" value="Classical" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="_category">
+			<column name="name" value="Blues" />
+			<column name="description" value="Blues" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="_category">
+			<column name="name" value="Dance" />
+			<column name="description" value="Dance" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="_category">
+			<column name="name" value="Disney" />
+			<column name="description" value="Disney" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-05" author="gasmyr.mougang">
+		<createTable tableName="_music">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="music_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="artistname" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="filename" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="publicationdate" type="varchar(255)" />
+			<column name="likes" type="int8" />
+			<column name="dislikes" type="int8" />
+			<column name="category_id" type="int8" defaultValueNumeric="1" />
+			<column name="poster_id" type="int8" defaultValueNumeric="1" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="_music">
+			<column name="name" value="Run THE WORLD" />
+			<column name="artistname" value="Beyonce" />
+			<column name="description"
+				value="Single ladies! Watch our Taylor Swift parody.Hit songs that contain a sample from another song!  We did a bit of investigating about which of our favorite songs contained samples  " />
+			<column name="publicationdate" value="2017-11-28 07:20:12" />
+			<column name="filename" value="sample.mp3" />
+			<column name="likes" value="15" />
+			<column name="dislikes" value="2" />
+			<column name="category_id" valueComputed="(SELECT id FROM _category WHERE name='Disney')" />
+			<column name="poster_id" valueComputed="(SELECT id FROM _user WHERE username='admin')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

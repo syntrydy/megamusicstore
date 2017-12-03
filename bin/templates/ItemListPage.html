@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+			<div class="page-title" th:text="#{homeMenuText}+' > '+Songs"></div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Musics</h3>
+					<button type="button"
+						class="btn btn-primary bmd-btn-fab active pull-right"
+						data-toggle="modal" data-title="Add" data-target="#add">
+						<i class="fa fa-plus" th:text="#{ButtonAddText}">&nbsp;Add</i>
+					</button>
+					<table class="table table-hover" id="itemTable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Artist</th>
+								<th>Likes</th>
+								<th>Dislikes</th>
+								<th>Category</th>
+								<th>Detail</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${musics}">
+								<td th:text="${item.name}"></td>
+								<td th:text="${item.artistName}"></td>
+								<td th:text="${item.likes}"></td>
+								<td th:text="${item.dislikes}"></td>
+								<td><a th:href="@{/category/{id}(id=${item.category.id})}"
+									th:text="${item.category.name}"></a></td>
+								<td style="width: 50px;"><p data-placement="top"
+										title="Details">
+										<a th:href="@{/music/{id}(id=${item.id})}"><button
+												class="btn btn-primary btn-s" data-id="${item.id}">
+												<span class="fa fa-eye"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p title="Edit">
+										<a th:href="@{/emusic/{id}(id=${item.id})}"><button
+												class="btn btn-primary btn-s">
+												<span class="fa fa-pencil"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p data-placement="top"
+										data-toggle="tooltip" title="Delete">
+										<button id="deleteItemFromList"
+											class="btn btn-danger btn-s deleteItemFromList"
+											data-title="Delete" data-toggle="modal" data-target="#delete"
+											th:attr="data-id=${item.id}">
+											<span class="fa  fa-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- add modal -->
+			<div class="modal fade" id="add" tabindex="-1" role="dialog"
+				aria-labelledby="add" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Add new
+								song</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<input class="form-control" id="nameAdd" type="text"
+									placeholder="name"></input>
+							</div>
+							<div class="form-group">
+								<input class="form-control" id="artistNameAdd" type="text"
+									placeholder="artist name"></input>
+							</div>
+							<div class="form-group">
+								<input class="form-control " type="text"
+									placeholder="description" id="descriptionAdd"></input>
+							</div>
+							<div class="form-group">
+								<select class="form-control" id="categorySelect">
+									<optgroup label="Select category">
+										<option th:each="c : ${categories}" th:value="${c.id}"
+											th:text="${c.name}"></option>
+									</optgroup>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer ">
+							<button type="button" id="saveItem"
+								class="btn btn-primary btn-lg" style="width: 100%;">
+								<span class="fa fa-save"></span> Save
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- delete modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<input type="hidden" name="modalItemId" id="modalItemId" value="" />
+						</div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Delete
+								music</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+								<p>Do you really want to delete this song?</p>
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary deleteItem">
+								<span class="fa fa-check"></span> 
+								<p th:text="#{yesText}"></p>
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="fa fa-times"></span> 
+								<p th:text="#{noText}"></p>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript"
+	src="../js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="../js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteItemFromList").click(function() {
+		$("#modalItemId").val($(this).attr("data-id"))
+	});
+	$(".deleteItem").click(function() {
+		event.preventDefault();
+		deleteItem();
+	});
+	//adding new song
+	$("#saveItem").click(function() {
+		event.preventDefault();
+		addItem();
+	});
+	$('#itemTable').DataTable();
+</script>
+</html>

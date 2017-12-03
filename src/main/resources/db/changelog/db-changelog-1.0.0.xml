@@ -1,0 +1,89 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="AAM-01" author="gasmyr.mougang">
+		<createTable tableName="_user">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="user_pkey"
+					nullable="false" />
+			</column>
+			<column name="username" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="encryptedpassword" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="full_name" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="phone" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="email" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="active" type="bool" defaultValue="true" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="_user">
+			<column name="full_name" value="Thomas Gasmyr" />
+			<column name="phone" value="+237 696534361" />
+			<column name="email" value="gasmyrmougang@yahoo.fr" />
+			<column name="username" value="admin" />
+			<column name="encryptedpassword"
+				value="xsqTme4OardMONZbhotOMu2NGJW9ej5k5RyN4yVK+aToAADMSKz5nxy3IK/2XPfy" />
+			<column name="active" value="true" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="_user">
+			<column name="full_name" value="Ulrielle" />
+			<column name="phone" value="+237 672518192" />
+			<column name="email" value="user@yahoo.fr" />
+			<column name="username" value="user" />
+			<column name="encryptedpassword"
+				value="AUqcfg1TyQF3tz8yuZ9y50DrI0i9mlayTPimGAhBNaIVU1avZUkHAUzoP/rd7Wum" />
+			<column name="active" value="true" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-02" author="gasmyr.mougang">
+		<createTable tableName="_role">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="role_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="_role">
+			<column name="name" value="ROLE_ADMIN" />
+			<column name="description" value="administrator" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="_role">
+			<column name="name" value="ROLE_USER" />
+			<column name="description" value="user" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-03" author="gasmyr.mougang">
+		<createTable tableName="user_role">
+			<column name="user_id" type="int8" />
+			<column name="role_id" type="int8" />
+		</createTable>
+		<insert tableName="user_role">
+			<column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='admin')" />
+			<column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_ADMIN')" />
+		</insert>
+		<insert tableName="user_role">
+			<column name="user_id" valueComputed="(SELECT id FROM _user WHERE username='user')" />
+			<column name="role_id" valueComputed="(SELECT id FROM _role WHERE name='ROLE_USER')" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

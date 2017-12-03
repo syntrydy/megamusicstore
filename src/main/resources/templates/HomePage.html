@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+			<div id="homeId" class="page-title" th:text="#{homeMenuText}">
+			</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Reports</h3>
+				</div>
+			</div>
+
+			
+
+
+
+
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

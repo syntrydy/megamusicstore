@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+			<div class="page-title"
+				th:text="#{homeMenuText}+' > '+Categories"></div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Music Categories</h3>
+					<a th:href="@{/category}"><button type="button"
+							class="btn btn-success bmd-btn-fab active pull-right">
+							<i class="fa fa-plus" th:text="#{ButtonAddText}">&nbsp;Add</i>
+						</button> </a>
+					<table class="table table-hover table-inverse" id="categoryTable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Parent</th>
+								<th>N Music</th>
+								<th>Detail</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${categories}">
+								<td th:text="${c.name}"></td>
+								<td th:text="${c.description}"></td>
+								<td th:text="${c.getParentName()}"></td>
+								<td th:text="${c.musics.size()}"></td>
+								<td style="width: 50px;"><p data-placement="top"
+										title="Details">
+										<a th:href="@{/category/{id}(id=${c.id})}"><button
+												class="btn btn-primary btn-s" data-id="${c.id}">
+												<span class="fa fa-eye"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p title="Edit">
+										<a th:href="@{/ecategory/{id}(id=${c.id})}"><button
+												class="btn btn-primary btn-s">
+												<span class="fa fa-pencil"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p data-placement="top"
+										data-toggle="tooltip" title="Delete">
+										<button id="deleteCategoryFromList"
+											class="btn btn-danger btn-s deleteCategoryFromList"
+											data-title="Delete" data-toggle="modal" data-target="#delete"
+											th:attr="data-id=${c.id}">
+											<span class="fa  fa-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- delete modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<input type="hidden" name="modalCategoryId" id="modalCategoryId"
+								value="" />
+						</div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Delete category</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+								<p>Do you really want to delete this category</p>
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary deleteCategory">
+								<span class="fa fa-check"></span> 
+								<p th:text="#{yesText}"></p>
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="fa fa-times"></span> 
+								<p th:text="#{noText}"></p>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteCategoryFromList").click(function() {
+		$("#modalCategoryId").val($(this).attr("data-id"))
+	});
+	$(".deleteCategory").click(function() {
+		event.preventDefault();
+		deleteCategory();
+	});
+	//adding Category
+	$("#saveCategory").click(function() {
+		event.preventDefault();
+		addCategory();
+	});
+	$('#categoryTable').DataTable();
+</script>
+</html>
