@@ -10,7 +10,7 @@ A music store application build using spring boot, spring security, postgres, bo
      users and their roles.
   #### Others cool stuff are:
     1. The application are Unit tested(Junit)
-    2. The integration test in up(selinuim/wendriver),BDD.
+    2. The integration test is up(selinuim/webdriver),BDD.
     3. Email notification during password reset and new user registration.
  
 
